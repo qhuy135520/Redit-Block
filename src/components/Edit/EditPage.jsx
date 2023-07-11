@@ -1,19 +1,32 @@
 import { useState } from "react";
 import "./edit.css"
 import Input from "../InputFields/Input";
+import { useDispatch, useSelector } from "react-redux";
+import { update } from "../../redux/userSlice";
 const EditPage = (props) => {
     const { setEdit } = props
 
     const avaUrl = []
 
-    const [name, setName] = useState('Le Huy')
-    const [age, setAge] = useState(20)
-    const [about, setAbout] = useState("I'm a software engineer")
-    const [theme, setTheme] = useState("#ff9051")
-    const [url, setUrl] = useState("")
+    const user = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+
+    const [name, setName] = useState(user.name)
+    const [age, setAge] = useState(user.age)
+    const [about, setAbout] = useState(user.about)
+    const [theme, setTheme] = useState(user.themeColor)
+    const [url, setUrl] = useState(user.avaUrl)
     const handleSubmit = (e) => {
         e.preventDefault()
         setEdit(false)
+        const updateUser = {
+            name: name,
+            age: age,
+            about: about,
+            avaUrl: url,
+            themeColor: theme
+        };
+        dispatch(update(updateUser));
     }
 
     return (
@@ -23,7 +36,7 @@ const EditPage = (props) => {
                     <button className="close">SAVE</button>
                     <div className="edit-profile">Edit Profile</div>
                     <div className="input-container">
-                        <Input data={name} setData={setName} lable={"Display name"} />
+                        <Input data={user.name} setData={setName} lable={"Display name"} />
                         <Input data={age} setData={setAge} lable={"Age"} />
                         <Input inputType="textarea" classStyle="input-about" data={about} setData={setAbout} lable={"About"} />
 
