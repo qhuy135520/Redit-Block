@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./edit.css"
 import Input from "../InputFields/Input";
 import { useDispatch, useSelector } from "react-redux";
-import { update } from "../../redux/userSlice";
+import { updateUsers } from "../../redux/apiRequest";
 const EditPage = (props) => {
     const { setEdit } = props
 
@@ -26,7 +26,7 @@ const EditPage = (props) => {
             avaUrl: url,
             themeColor: theme
         };
-        dispatch(update(updateUser));
+        updateUsers(updateUser,dispatch)
     }
 
     return (
